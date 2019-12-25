@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PasswordProtection
 {
-    public partial class Form1 : Form
+    public partial class frm_LogIn : Form
     {
-        public Form1()
+        public frm_LogIn()
         {
             InitializeComponent();
         }
