@@ -79,19 +79,21 @@
             this.btn_LogIn.TabIndex = 4;
             this.btn_LogIn.Text = "Log In";
             this.btn_LogIn.UseVisualStyleBackColor = true;
+            this.btn_LogIn.Click += new System.EventHandler(this.btn_LogIn_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(208, 69);
+            this.button2.Location = new System.Drawing.Point(208, 98);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 5;
             this.button2.Text = "Quit";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // btn_Register
             // 
-            this.btn_Register.Location = new System.Drawing.Point(208, 98);
+            this.btn_Register.Location = new System.Drawing.Point(208, 69);
             this.btn_Register.Name = "btn_Register";
             this.btn_Register.Size = new System.Drawing.Size(75, 23);
             this.btn_Register.TabIndex = 6;

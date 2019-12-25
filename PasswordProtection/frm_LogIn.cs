@@ -16,5 +16,18 @@ namespace PasswordProtection
         {
             InitializeComponent();
         }
+
+        private void btn_LogIn_Click(object sender, EventArgs e)
+        {
+            Hide();
+            frm_main frm_Main = new frm_main();
+            frm_Main.FormClosed += (s, args) => Close();
+            frm_Main.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
