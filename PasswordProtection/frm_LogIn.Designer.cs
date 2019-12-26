@@ -99,6 +99,7 @@
             this.btn_Register.TabIndex = 6;
             this.btn_Register.Text = "Register";
             this.btn_Register.UseVisualStyleBackColor = true;
+            this.btn_Register.Click += new System.EventHandler(this.btn_Register_Click);
             // 
             // frm_LogIn
             // 
