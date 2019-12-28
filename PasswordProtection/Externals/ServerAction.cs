@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PasswordProtection.ExternalActions
+namespace PasswordProtection.Externals
 {
     static class ServerAction
     {

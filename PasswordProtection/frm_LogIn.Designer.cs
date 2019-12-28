@@ -29,29 +29,30 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_LogIn));
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.tbUsername = new System.Windows.Forms.TextBox();
+            this.mtbPassword = new System.Windows.Forms.MaskedTextBox();
             this.label_Username = new System.Windows.Forms.Label();
             this.label_Password = new System.Windows.Forms.Label();
-            this.btn_LogIn = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btn_Register = new System.Windows.Forms.Button();
+            this.btnLogIn = new System.Windows.Forms.Button();
+            this.btnQuit = new System.Windows.Forms.Button();
+            this.btnRegister = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // tbUsername
             // 
-            this.textBox1.Location = new System.Drawing.Point(34, 48);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(160, 20);
-            this.textBox1.TabIndex = 0;
+            this.tbUsername.Location = new System.Drawing.Point(34, 48);
+            this.tbUsername.Name = "tbUsername";
+            this.tbUsername.Size = new System.Drawing.Size(160, 20);
+            this.tbUsername.TabIndex = 0;
             // 
-            // maskedTextBox1
+            // mtbPassword
             // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(34, 94);
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.PasswordChar = '*';
-            this.maskedTextBox1.Size = new System.Drawing.Size(159, 20);
-            this.maskedTextBox1.TabIndex = 1;
+            this.mtbPassword.Location = new System.Drawing.Point(34, 94);
+            this.mtbPassword.Name = "mtbPassword";
+            this.mtbPassword.PasswordChar = '*';
+            this.mtbPassword.Size = new System.Drawing.Size(159, 20);
+            this.mtbPassword.TabIndex = 1;
             // 
             // label_Username
             // 
@@ -71,35 +72,44 @@
             this.label_Password.TabIndex = 3;
             this.label_Password.Text = "Password:";
             // 
-            // btn_LogIn
+            // btnLogIn
             // 
-            this.btn_LogIn.Location = new System.Drawing.Point(208, 40);
-            this.btn_LogIn.Name = "btn_LogIn";
-            this.btn_LogIn.Size = new System.Drawing.Size(75, 23);
-            this.btn_LogIn.TabIndex = 4;
-            this.btn_LogIn.Text = "Log In";
-            this.btn_LogIn.UseVisualStyleBackColor = true;
-            this.btn_LogIn.Click += new System.EventHandler(this.btn_LogIn_Click);
+            this.btnLogIn.Location = new System.Drawing.Point(208, 40);
+            this.btnLogIn.Name = "btnLogIn";
+            this.btnLogIn.Size = new System.Drawing.Size(75, 23);
+            this.btnLogIn.TabIndex = 4;
+            this.btnLogIn.Text = "Log In";
+            this.btnLogIn.UseVisualStyleBackColor = true;
+            this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
             // 
-            // button2
+            // btnQuit
             // 
-            this.button2.Location = new System.Drawing.Point(208, 98);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Quit";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnQuit.Location = new System.Drawing.Point(208, 98);
+            this.btnQuit.Name = "btnQuit";
+            this.btnQuit.Size = new System.Drawing.Size(75, 23);
+            this.btnQuit.TabIndex = 5;
+            this.btnQuit.Text = "Quit";
+            this.btnQuit.UseVisualStyleBackColor = true;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
-            // btn_Register
+            // btnRegister
             // 
-            this.btn_Register.Location = new System.Drawing.Point(208, 69);
-            this.btn_Register.Name = "btn_Register";
-            this.btn_Register.Size = new System.Drawing.Size(75, 23);
-            this.btn_Register.TabIndex = 6;
-            this.btn_Register.Text = "Register";
-            this.btn_Register.UseVisualStyleBackColor = true;
-            this.btn_Register.Click += new System.EventHandler(this.btn_Register_Click);
+            this.btnRegister.Location = new System.Drawing.Point(208, 69);
+            this.btnRegister.Name = "btnRegister";
+            this.btnRegister.Size = new System.Drawing.Size(75, 23);
+            this.btnRegister.TabIndex = 6;
+            this.btnRegister.Text = "Register";
+            this.btnRegister.UseVisualStyleBackColor = true;
+            this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(33, 128);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "label1";
             // 
             // frm_LogIn
             // 
@@ -107,13 +117,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(316, 170);
             this.ControlBox = false;
-            this.Controls.Add(this.btn_Register);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.btn_LogIn);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnRegister);
+            this.Controls.Add(this.btnQuit);
+            this.Controls.Add(this.btnLogIn);
             this.Controls.Add(this.label_Password);
             this.Controls.Add(this.label_Username);
-            this.Controls.Add(this.maskedTextBox1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.mtbPassword);
+            this.Controls.Add(this.tbUsername);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frm_LogIn";
             this.Text = "Pass Lock: Log In";
@@ -124,12 +135,13 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.TextBox tbUsername;
+        private System.Windows.Forms.MaskedTextBox mtbPassword;
         private System.Windows.Forms.Label label_Username;
         private System.Windows.Forms.Label label_Password;
-        private System.Windows.Forms.Button btn_LogIn;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button btn_Register;
+        private System.Windows.Forms.Button btnLogIn;
+        private System.Windows.Forms.Button btnQuit;
+        private System.Windows.Forms.Button btnRegister;
+        private System.Windows.Forms.Label label1;
     }
 }
