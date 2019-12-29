@@ -1,7 +1,5 @@
-﻿using System;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Configuration;
-using System.Windows.Forms;
 
 namespace PasswordProtection.Externals
 {
@@ -29,12 +27,12 @@ namespace PasswordProtection.Externals
                         sqlDataAdapter.InsertCommand.Transaction.Commit();
                         connection.Close();
                     }
-                    catch(SqlException)
+                    catch (SqlException)
                     {
                         result = -1;
                     }
-                    
-                    //sqlDataAdapter.InsertCommand.Dispose();
+
+                    sqlDataAdapter.InsertCommand.Dispose();
                     return (result < 0);
                 }
             }
@@ -61,6 +59,28 @@ namespace PasswordProtection.Externals
                     }
                     connection.Close();
                     return Password;
+                }
+            }
+        }
+
+        public static bool IsUsernameInDatabase(string Username)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var query = "SELECT username FROM [dbo].[LogIn] WHERE username = @username";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@username", Username);
+
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        var usernameExists = reader.Read();
+                        connection.Close();
+                        connection.Dispose();
+                        return usernameExists;
+                    }
                 }
             }
         }

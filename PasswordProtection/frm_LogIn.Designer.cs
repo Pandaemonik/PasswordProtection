@@ -36,7 +36,7 @@
             this.btnLogIn = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
             this.btnRegister = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblInfo = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tbUsername
@@ -74,6 +74,7 @@
             // 
             // btnLogIn
             // 
+            this.btnLogIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogIn.Location = new System.Drawing.Point(208, 40);
             this.btnLogIn.Name = "btnLogIn";
             this.btnLogIn.Size = new System.Drawing.Size(75, 23);
@@ -84,6 +85,7 @@
             // 
             // btnQuit
             // 
+            this.btnQuit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQuit.Location = new System.Drawing.Point(208, 98);
             this.btnQuit.Name = "btnQuit";
             this.btnQuit.Size = new System.Drawing.Size(75, 23);
@@ -94,6 +96,7 @@
             // 
             // btnRegister
             // 
+            this.btnRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegister.Location = new System.Drawing.Point(208, 69);
             this.btnRegister.Name = "btnRegister";
             this.btnRegister.Size = new System.Drawing.Size(75, 23);
@@ -102,22 +105,22 @@
             this.btnRegister.UseVisualStyleBackColor = true;
             this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
             // 
-            // label1
+            // lblInfo
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 128);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "label1";
+            this.lblInfo.AutoSize = true;
+            this.lblInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblInfo.Location = new System.Drawing.Point(106, 9);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(88, 13);
+            this.lblInfo.TabIndex = 7;
+            this.lblInfo.Text = "Information Label";
             // 
             // frm_LogIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(316, 170);
-            this.ControlBox = false;
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(316, 152);
+            this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnLogIn);
@@ -128,6 +131,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frm_LogIn";
             this.Text = "Pass Lock: Log In";
+            this.Load += new System.EventHandler(this.frm_LogIn_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,6 +146,6 @@
         private System.Windows.Forms.Button btnLogIn;
         private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.Button btnRegister;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblInfo;
     }
 }

@@ -13,13 +13,39 @@ namespace PasswordProtection
             InitializeComponent();
         }
 
+        private void frm_LogIn_Load(object sender, EventArgs e)
+        {
+            AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
+        }
         private void btnLogIn_Click(object sender, EventArgs e)
         {
             try
             {
                 var Password = mtbPassword.Text;
-                var dbPassword = DbAction.GetPasswordByUser(tbUsername.Text);
-                label1.Text = dbPassword;
+                string dbPassword = string.Empty;
+                var TbUsername = tbUsername.Text;
+
+                if (DbAction.IsUsernameInDatabase(TbUsername))
+                {
+                    dbPassword = DbAction.GetPasswordByUser(TbUsername);
+                }
+                else
+                {
+                    var SrvrSidePass = ServerAction.GetServerSidePass(TbUsername, mtbPassword.Text);
+                    if (SrvrSidePass != string.Empty)
+                    {
+                        try
+                        {
+                            if (DbAction.AddNewUser(TbUsername, SrvrSidePass))
+                                throw new DatabaseConnectionFailure("Error inserting data into Database!");
+                        }
+                        catch (DatabaseConnectionFailure error)
+                        {
+                            MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+
                 if (PassHash.Equals(Password, dbPassword))
                 {
                     Hide();
@@ -36,24 +62,19 @@ namespace PasswordProtection
             }
         }
 
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            Hide();
+            frm_Register frm_Register = new frm_Register();
+            frm_Register.ShowDialog();
+            //TODO: Set Email And Password
+            Show();
+        }
+
         private void btnQuit_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void btnRegister_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (DbAction.AddNewUser(tbUsername.Text, "5PAMfi8fgQznO4Qe2cceGo80vNfDIEu/BdFjtWWm6ZTYtAqRoOIHO4NnTlINXtpCNAA="))
-                    throw new DatabaseConnectionFailure("Error inserting data into Database!");
-                else
-                    label1.Text = "A OK!";
-            }
-            catch (DatabaseConnectionFailure error)
-            {
-                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
     }
 }
