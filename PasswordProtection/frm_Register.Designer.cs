@@ -30,16 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Register));
             this.cbPasswordVisible = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbEmail = new System.Windows.Forms.TextBox();
+            this.tbPassword = new System.Windows.Forms.TextBox();
             this.cbBackUpPassword = new System.Windows.Forms.CheckBox();
             this.btnSuggest = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.lblEmail = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.lblInvalidEmail = new System.Windows.Forms.Label();
             this.lblInvalidPassword = new System.Windows.Forms.Label();
+            this.lblInvalidRegistration = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cbPasswordVisible
@@ -54,20 +55,23 @@
             this.cbPasswordVisible.TabIndex = 0;
             this.cbPasswordVisible.Text = "Show Password";
             this.cbPasswordVisible.UseVisualStyleBackColor = true;
+            this.cbPasswordVisible.CheckedChanged += new System.EventHandler(this.cbPasswordVisible_CheckedChanged);
             // 
-            // textBox1
+            // tbEmail
             // 
-            this.textBox1.Location = new System.Drawing.Point(35, 46);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(190, 20);
-            this.textBox1.TabIndex = 1;
+            this.tbEmail.Location = new System.Drawing.Point(35, 46);
+            this.tbEmail.Name = "tbEmail";
+            this.tbEmail.Size = new System.Drawing.Size(190, 20);
+            this.tbEmail.TabIndex = 1;
+            this.tbEmail.TextChanged += new System.EventHandler(this.tbEmail_TextChanged);
             // 
-            // textBox2
+            // tbPassword
             // 
-            this.textBox2.Location = new System.Drawing.Point(35, 91);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(279, 20);
-            this.textBox2.TabIndex = 2;
+            this.tbPassword.Location = new System.Drawing.Point(35, 91);
+            this.tbPassword.Name = "tbPassword";
+            this.tbPassword.Size = new System.Drawing.Size(279, 20);
+            this.tbPassword.TabIndex = 2;
+            this.tbPassword.TextChanged += new System.EventHandler(this.tbPassword_TextChanged);
             // 
             // cbBackUpPassword
             // 
@@ -91,6 +95,7 @@
             this.btnSuggest.TabIndex = 4;
             this.btnSuggest.Text = "Suggest";
             this.btnSuggest.UseVisualStyleBackColor = true;
+            this.btnSuggest.Click += new System.EventHandler(this.btnSuggest_Click);
             // 
             // btnSave
             // 
@@ -101,16 +106,18 @@
             this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Register";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // button3
+            // btnCancel
             // 
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(239, 171);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Cancel";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Location = new System.Drawing.Point(239, 171);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 6;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // lblEmail
             // 
@@ -136,9 +143,9 @@
             this.lblInvalidEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInvalidEmail.Location = new System.Drawing.Point(113, 30);
             this.lblInvalidEmail.Name = "lblInvalidEmail";
-            this.lblInvalidEmail.Size = new System.Drawing.Size(95, 13);
+            this.lblInvalidEmail.Size = new System.Drawing.Size(66, 13);
             this.lblInvalidEmail.TabIndex = 9;
-            this.lblInvalidEmail.Text = "Invalid Email Label";
+            this.lblInvalidEmail.Text = "Invalid Email";
             this.lblInvalidEmail.Visible = false;
             // 
             // lblInvalidPassword
@@ -150,22 +157,35 @@
             this.lblInvalidPassword.Size = new System.Drawing.Size(116, 13);
             this.lblInvalidPassword.TabIndex = 10;
             this.lblInvalidPassword.Text = "Invalid Password Label";
+            this.lblInvalidPassword.Visible = false;
+            // 
+            // lblInvalidRegistration
+            // 
+            this.lblInvalidRegistration.AutoSize = true;
+            this.lblInvalidRegistration.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblInvalidRegistration.Location = new System.Drawing.Point(153, 143);
+            this.lblInvalidRegistration.Name = "lblInvalidRegistration";
+            this.lblInvalidRegistration.Size = new System.Drawing.Size(97, 13);
+            this.lblInvalidRegistration.TabIndex = 11;
+            this.lblInvalidRegistration.Text = "Invalid Registration";
+            this.lblInvalidRegistration.Visible = false;
             // 
             // frm_Register
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(426, 219);
+            this.Controls.Add(this.lblInvalidRegistration);
             this.Controls.Add(this.lblInvalidPassword);
             this.Controls.Add(this.lblInvalidEmail);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblEmail);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnSuggest);
             this.Controls.Add(this.cbBackUpPassword);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbPassword);
+            this.Controls.Add(this.tbEmail);
             this.Controls.Add(this.cbPasswordVisible);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -180,15 +200,16 @@
         #endregion
 
         private System.Windows.Forms.CheckBox cbPasswordVisible;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbEmail;
+        private System.Windows.Forms.TextBox tbPassword;
         private System.Windows.Forms.CheckBox cbBackUpPassword;
         private System.Windows.Forms.Button btnSuggest;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Label lblInvalidEmail;
         private System.Windows.Forms.Label lblInvalidPassword;
+        private System.Windows.Forms.Label lblInvalidRegistration;
     }
 }

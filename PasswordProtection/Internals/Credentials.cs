@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PasswordProtection.Data
+namespace PasswordProtection.Internals
 {
     class Credentials
     {
+        public List<string> CredentialsList;
     }
 }

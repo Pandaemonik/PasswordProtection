@@ -67,14 +67,17 @@ namespace PasswordProtection
             Hide();
             frm_Register frm_Register = new frm_Register();
             frm_Register.ShowDialog();
-            //TODO: Set Email And Password
             Show();
+        }
+
+        private void btnResetPass_Click(object sender, EventArgs e)
+        {
+            ServerAction.SendPasswordRequest(tbUsername.Text);
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
             Close();
         }
-
     }
 }

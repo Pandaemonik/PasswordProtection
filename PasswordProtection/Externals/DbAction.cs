@@ -11,7 +11,9 @@ namespace PasswordProtection.Externals
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                var query = "INSERT INTO [dbo].[LogIn] (username,password) VALUES (@username,@password)";
+                var query = "" +
+                    "INSERT INTO [dbo].[LogIn] (username,password) " +
+                    "VALUES (@username,@password)";
 
                 using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter())
                 {
@@ -31,7 +33,6 @@ namespace PasswordProtection.Externals
                     {
                         result = -1;
                     }
-
                     sqlDataAdapter.InsertCommand.Dispose();
                     return (result < 0);
                 }
@@ -40,10 +41,13 @@ namespace PasswordProtection.Externals
 
         public static string GetPasswordByUser(string Username)
         {
-            string Password = "N/A";
+            var Password = "N/A";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                var query = "SELECT password FROM [dbo].[LogIn] WHERE username = @username";
+                var query = "" +
+                    "SELECT password " +
+                    "FROM [dbo].[LogIn] " +
+                    "WHERE username = @username";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -63,11 +67,46 @@ namespace PasswordProtection.Externals
             }
         }
 
+        public static bool ChangePassword(string Username, string Password)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var query = "" +
+                "UPDATE [dbo].[LogIn] " +
+                "SET password = @password " +
+                "WHERE username = @username";
+                using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter())
+                {
+                    sqlDataAdapter.InsertCommand = new SqlCommand(query, connection);
+                    sqlDataAdapter.InsertCommand.Parameters.AddWithValue("@username", Username);
+                    sqlDataAdapter.InsertCommand.Parameters.AddWithValue("@password", Password);
+                    int result;
+                    try
+                    {
+                        connection.Open();
+                        sqlDataAdapter.InsertCommand.Transaction = connection.BeginTransaction();
+                        result = sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+                        sqlDataAdapter.InsertCommand.Transaction.Commit();
+                        connection.Close();
+                    }
+                    catch (SqlException)
+                    {
+                        result = -1;
+                    }
+                    sqlDataAdapter.InsertCommand.Dispose();
+                    return (result < 0);
+                }
+            }
+        }
+
         public static bool IsUsernameInDatabase(string Username)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                var query = "SELECT username FROM [dbo].[LogIn] WHERE username = @username";
+                var query = "" +
+                    "SELECT username " +
+                    "FROM [dbo].[LogIn] " +
+                    "WHERE username = @username";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

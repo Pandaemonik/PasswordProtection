@@ -37,27 +37,28 @@
             this.btnQuit = new System.Windows.Forms.Button();
             this.btnRegister = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
+            this.btnResetPass = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbUsername
             // 
-            this.tbUsername.Location = new System.Drawing.Point(34, 48);
+            this.tbUsername.Location = new System.Drawing.Point(12, 25);
             this.tbUsername.Name = "tbUsername";
-            this.tbUsername.Size = new System.Drawing.Size(160, 20);
+            this.tbUsername.Size = new System.Drawing.Size(187, 20);
             this.tbUsername.TabIndex = 0;
             // 
             // mtbPassword
             // 
-            this.mtbPassword.Location = new System.Drawing.Point(34, 94);
+            this.mtbPassword.Location = new System.Drawing.Point(12, 64);
             this.mtbPassword.Name = "mtbPassword";
             this.mtbPassword.PasswordChar = '*';
-            this.mtbPassword.Size = new System.Drawing.Size(159, 20);
+            this.mtbPassword.Size = new System.Drawing.Size(187, 20);
             this.mtbPassword.TabIndex = 1;
             // 
             // label_Username
             // 
             this.label_Username.AutoSize = true;
-            this.label_Username.Location = new System.Drawing.Point(31, 32);
+            this.label_Username.Location = new System.Drawing.Point(9, 9);
             this.label_Username.Name = "label_Username";
             this.label_Username.Size = new System.Drawing.Size(58, 13);
             this.label_Username.TabIndex = 2;
@@ -66,7 +67,7 @@
             // label_Password
             // 
             this.label_Password.AutoSize = true;
-            this.label_Password.Location = new System.Drawing.Point(33, 78);
+            this.label_Password.Location = new System.Drawing.Point(9, 48);
             this.label_Password.Name = "label_Password";
             this.label_Password.Size = new System.Drawing.Size(56, 13);
             this.label_Password.TabIndex = 3;
@@ -75,9 +76,9 @@
             // btnLogIn
             // 
             this.btnLogIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogIn.Location = new System.Drawing.Point(208, 40);
+            this.btnLogIn.Location = new System.Drawing.Point(205, 14);
             this.btnLogIn.Name = "btnLogIn";
-            this.btnLogIn.Size = new System.Drawing.Size(75, 23);
+            this.btnLogIn.Size = new System.Drawing.Size(95, 23);
             this.btnLogIn.TabIndex = 4;
             this.btnLogIn.Text = "Log In";
             this.btnLogIn.UseVisualStyleBackColor = true;
@@ -86,9 +87,9 @@
             // btnQuit
             // 
             this.btnQuit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuit.Location = new System.Drawing.Point(208, 98);
+            this.btnQuit.Location = new System.Drawing.Point(205, 101);
             this.btnQuit.Name = "btnQuit";
-            this.btnQuit.Size = new System.Drawing.Size(75, 23);
+            this.btnQuit.Size = new System.Drawing.Size(95, 23);
             this.btnQuit.TabIndex = 5;
             this.btnQuit.Text = "Quit";
             this.btnQuit.UseVisualStyleBackColor = true;
@@ -97,9 +98,9 @@
             // btnRegister
             // 
             this.btnRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegister.Location = new System.Drawing.Point(208, 69);
+            this.btnRegister.Location = new System.Drawing.Point(205, 43);
             this.btnRegister.Name = "btnRegister";
-            this.btnRegister.Size = new System.Drawing.Size(75, 23);
+            this.btnRegister.Size = new System.Drawing.Size(95, 23);
             this.btnRegister.TabIndex = 6;
             this.btnRegister.Text = "Register";
             this.btnRegister.UseVisualStyleBackColor = true;
@@ -109,17 +110,30 @@
             // 
             this.lblInfo.AutoSize = true;
             this.lblInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblInfo.Location = new System.Drawing.Point(106, 9);
+            this.lblInfo.Location = new System.Drawing.Point(9, 87);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(88, 13);
             this.lblInfo.TabIndex = 7;
             this.lblInfo.Text = "Information Label";
+            this.lblInfo.Visible = false;
+            // 
+            // btnResetPass
+            // 
+            this.btnResetPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResetPass.Location = new System.Drawing.Point(205, 72);
+            this.btnResetPass.Name = "btnResetPass";
+            this.btnResetPass.Size = new System.Drawing.Size(95, 23);
+            this.btnResetPass.TabIndex = 8;
+            this.btnResetPass.Text = "Reset Password";
+            this.btnResetPass.UseVisualStyleBackColor = true;
+            this.btnResetPass.Click += new System.EventHandler(this.btnResetPass_Click);
             // 
             // frm_LogIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(316, 152);
+            this.ClientSize = new System.Drawing.Size(318, 137);
+            this.Controls.Add(this.btnResetPass);
             this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.btnQuit);
@@ -147,5 +161,6 @@
         private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.Button btnRegister;
         private System.Windows.Forms.Label lblInfo;
+        private System.Windows.Forms.Button btnResetPass;
     }
 }
