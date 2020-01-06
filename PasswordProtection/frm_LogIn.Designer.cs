@@ -60,9 +60,9 @@
             this.label_Username.AutoSize = true;
             this.label_Username.Location = new System.Drawing.Point(9, 9);
             this.label_Username.Name = "label_Username";
-            this.label_Username.Size = new System.Drawing.Size(58, 13);
+            this.label_Username.Size = new System.Drawing.Size(35, 13);
             this.label_Username.TabIndex = 2;
-            this.label_Username.Text = "Username:";
+            this.label_Username.Text = "Email:";
             // 
             // label_Password
             // 

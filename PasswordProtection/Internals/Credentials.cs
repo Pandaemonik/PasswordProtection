@@ -8,6 +8,10 @@ namespace PasswordProtection.Internals
 {
     class Credentials
     {
-        public List<string> CredentialsList;
+        public string email { get; set; }
+        private string password { get; set; }
+        private List<Credential> _credentialsList;
+
+
     }
 }

@@ -8,10 +8,15 @@ namespace PasswordProtection.Internals
 {
     public class Credential
     {
-        string Username;
-        string Password;
-        string Link;
-        string DisplayName;
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Link { get; set; }
+        public string DisplayName { get; set; }
+
+        public string[] toArray()
+        {
+            return new string[] { DisplayName, Link, Password, Username };
+        }
 
         public static bool IsPasswordVaild(string Email, string Password)
         {
@@ -40,7 +45,4 @@ namespace PasswordProtection.Internals
             }
         }
     }
-
-
-
 }
