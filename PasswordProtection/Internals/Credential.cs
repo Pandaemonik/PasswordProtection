@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PasswordProtection.Internals
+﻿namespace PasswordProtection.Internals
 {
     public class Credential
     {
@@ -13,9 +7,42 @@ namespace PasswordProtection.Internals
         public string Link { get; set; }
         public string DisplayName { get; set; }
 
-        public string[] toArray()
+        public Credential(string displayName, string link, string username, string password)
+        {
+            DisplayName = displayName;
+            Link = link;
+            Username = username;
+            Password = password;
+        }
+
+        public Credential(string[] InitList)
+        {
+            if (InitList.Length < 3)
+            {
+                DisplayName = InitList[0];
+                Link = InitList[1];
+            }
+            else
+            {
+                DisplayName = InitList[0];
+                Link = InitList[1];
+                Username = InitList[2];
+                Password = InitList[3];
+            }
+        }
+        public Credential()
+        {
+            DisplayName = Link = Username = Password = "N/A";
+        }
+
+        public string[] ToArray()
         {
             return new string[] { DisplayName, Link, Password, Username };
+        }
+
+        public string ToString()
+        {
+            return DisplayName + ',' + Link + ',' + Username + ',' + Password;
         }
 
         public static bool IsPasswordVaild(string Email, string Password)

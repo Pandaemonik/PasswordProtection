@@ -15,6 +15,7 @@ namespace PasswordProtection
 
         private void frm_LogIn_Load(object sender, EventArgs e)
         {
+            FileIo.initWordList();
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
         }
         private void btnLogIn_Click(object sender, EventArgs e)
@@ -49,7 +50,7 @@ namespace PasswordProtection
                 if (PassHash.Equals(Password, dbPassword))
                 {
                     Hide();
-                    frm_main frm_Main = new frm_main();
+                    frm_main frm_Main = new frm_main(tbUsername.Text,mtbPassword.Text);
                     frm_Main.FormClosed += (s, args) => Close();
                     frm_Main.Show();
                 }

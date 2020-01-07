@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace PasswordProtection.Externals
 {
-    public static class DbAction
+    static class DbAction
     {
         private static readonly string _connectionString = ConfigurationManager.ConnectionStrings["PasswordProtection.Properties.Settings.DatabaseConnectionString"].ConnectionString;
 
