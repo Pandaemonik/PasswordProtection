@@ -30,7 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.tbUsername = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.cbShowPassword = new System.Windows.Forms.CheckBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnSuggest = new System.Windows.Forms.Button();
@@ -59,20 +59,22 @@
             this.tbUsername.Size = new System.Drawing.Size(183, 20);
             this.tbUsername.TabIndex = 1;
             // 
-            // checkBox1
+            // cbShowPassword
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(15, 90);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(102, 17);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Show Password";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbShowPassword.AutoSize = true;
+            this.cbShowPassword.Checked = true;
+            this.cbShowPassword.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbShowPassword.Location = new System.Drawing.Point(15, 90);
+            this.cbShowPassword.Name = "cbShowPassword";
+            this.cbShowPassword.Size = new System.Drawing.Size(102, 17);
+            this.cbShowPassword.TabIndex = 2;
+            this.cbShowPassword.Text = "Show Password";
+            this.cbShowPassword.UseVisualStyleBackColor = true;
+            this.cbShowPassword.CheckedChanged += new System.EventHandler(this.cbShowPassword_CheckedChanged);
             // 
             // btnCancel
             // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Location = new System.Drawing.Point(123, 204);
             this.btnCancel.Name = "btnCancel";
@@ -80,6 +82,7 @@
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnSave
             // 
@@ -90,16 +93,18 @@
             this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnSuggest
             // 
             this.btnSuggest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSuggest.Location = new System.Drawing.Point(123, 86);
+            this.btnSuggest.Location = new System.Drawing.Point(123, 90);
             this.btnSuggest.Name = "btnSuggest";
             this.btnSuggest.Size = new System.Drawing.Size(75, 23);
             this.btnSuggest.TabIndex = 6;
             this.btnSuggest.Text = "Suggest";
             this.btnSuggest.UseVisualStyleBackColor = true;
+            this.btnSuggest.Click += new System.EventHandler(this.btnSuggest_Click);
             // 
             // tbPassword
             // 
@@ -153,17 +158,18 @@
             // 
             this.lblError.AutoSize = true;
             this.lblError.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblError.Location = new System.Drawing.Point(77, 188);
+            this.lblError.Location = new System.Drawing.Point(23, 188);
             this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(63, 13);
+            this.lblError.Size = new System.Drawing.Size(164, 13);
             this.lblError.TabIndex = 13;
-            this.lblError.Text = "Invalid Stuff";
+            this.lblError.Text = "Adress and Website are requited!";
             this.lblError.Visible = false;
             // 
             // frm_EditCredential
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(220, 254);
             this.ControlBox = false;
             this.Controls.Add(this.lblError);
@@ -176,12 +182,13 @@
             this.Controls.Add(this.btnSuggest);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.cbShowPassword);
             this.Controls.Add(this.tbUsername);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frm_EditCredential";
             this.Text = "frm_EditCredential";
+            this.Load += new System.EventHandler(this.frm_EditCredential_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -191,7 +198,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbUsername;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox cbShowPassword;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnSuggest;
