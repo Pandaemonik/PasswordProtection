@@ -28,6 +28,7 @@ namespace PasswordProtection
             credentials.Add(new Credential());
             credentials.Add(new Credential());
             //refresh dataGrid
+            
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -101,6 +102,7 @@ namespace PasswordProtection
         {
             credentials = FileIo.Import(credentials, FileIo.openFile());
             //refresh dataGrid
+            clearFields();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -134,18 +136,21 @@ namespace PasswordProtection
         {
 
             //refresh dataGrid
+            clearFields();
         }
 
         void editCredentialAtIndex(int i)
         {
 
             //refresh dataGrid
+            clearFields();
         }
 
         void deleteCredentialAtIndex(int i)
         {
 
             //refresh dataGrid
+            clearFields();
         }
 
         void clearFields()

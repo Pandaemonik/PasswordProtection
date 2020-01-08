@@ -71,5 +71,11 @@ namespace PasswordProtection.Internals
             _credentialsList.ForEach(c => Returnable.Add(c.ToString()));
             return Returnable;
         }
+
+        public DataGridView fillInDataGrid(DataGridView dataGrid)
+        {
+            _credentialsList.ForEach(m => dataGrid.Rows.Add(m.DisplayName, m.Username));
+            return dataGrid;
+        }
     }
 }
