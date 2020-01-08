@@ -131,9 +131,13 @@ namespace PasswordProtection
         {
             Close();
         }
-
         void addCredential()
         {
+            frm_EditCredential newCredentialForm = new frm_EditCredential();
+            newCredentialForm.ShowDialog();
+            credentials.Add(newCredentialForm.credential);
+            dgAccountList.Rows.Clear();
+            credentials.fillInDataGrid(dgAccountList);
 
             //refresh dataGrid
             clearFields();
@@ -141,14 +145,20 @@ namespace PasswordProtection
 
         void editCredentialAtIndex(int i)
         {
+            frm_EditCredential editCredentialForm = new frm_EditCredential(credentials.getCredentialAtIndex(i)); // Assumes that dgAccountList and Credentials list are identical
+            editCredentialForm.ShowDialog(); // get window and its thing
+            credentials.editCredentialAtIndex(editCredentialForm.credential, i); // Set changes in the local DB
+            // Code above is probably redundant with addCredential(int i)
+            dgAccountList.Rows.Clear();
+            credentials.fillInDataGrid(dgAccountList);
 
-            //refresh dataGrid
             clearFields();
         }
 
         void deleteCredentialAtIndex(int i)
         {
-
+            credentials.removeCredentialAtIndex(i);
+            dgAccountList.Rows.RemoveAt(i);
             //refresh dataGrid
             clearFields();
         }
