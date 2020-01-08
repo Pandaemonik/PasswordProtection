@@ -29,6 +29,10 @@ namespace PasswordProtection.Externals
         {
             //Generates a string made form 4 random words. The dictonaty used is the "Oxford 3000" list. The number of combinations possible is 4^3262
             var Suggestion = string.Empty;
+            if(WordList == null)
+            {
+                initWordList();
+            }
             do
             {
                 Random random = new Random();
@@ -84,6 +88,11 @@ namespace PasswordProtection.Externals
                 return openFileDialog.FileName;
             }
             return "NULL";
+        }
+
+        public static void saveCredentialToFile(string EncodedCredentials)
+        {
+
         }
 
     }

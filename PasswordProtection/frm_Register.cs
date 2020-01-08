@@ -36,7 +36,7 @@ namespace PasswordProtection
                 try
                 {
                     var serverSidePass = cbBackUpPassword.Checked ? tbPassword.Text : string.Empty;
-                    ServerAction.RegisterNewUser(tbEmail.Text, tbPassword.Text);
+                    ServerAction.RegisterNewUser(tbEmail.Text, serverSidePass);
                     DbAction.AddNewUser(tbEmail.Text, PassHash.MakeHash(tbPassword.Text));
                 }
                 catch (Exception ex)

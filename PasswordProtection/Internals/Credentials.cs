@@ -17,7 +17,7 @@ namespace PasswordProtection.Internals
 
         public Credentials()
         {
-            //Default constructor used for test
+            //Default constructor used for tests
             email = string.Empty;
             password = string.Empty;
             _credentialsList = new List<Credential>();
@@ -29,6 +29,13 @@ namespace PasswordProtection.Internals
             email = Email;
             password = Password;
             _credentialsList = new List<Credential>();
+        }
+
+        public Credentials(Credentials credentials)
+        {
+            //Copy credentials. Leave the _credentialsList unset because safety
+            email = credentials.email;
+            password = credentials.password;
         }
 
         public string Encode()

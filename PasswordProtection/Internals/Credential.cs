@@ -30,9 +30,11 @@
                 Password = InitList[3];
             }
         }
+
         public Credential()
         {
-            DisplayName = Link = Username = Password = "N/A";
+            DisplayName = Username = Password = "N/A";
+            Link = "https://www.google.com/";
         }
 
         public string[] ToArray()

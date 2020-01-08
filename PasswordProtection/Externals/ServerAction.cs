@@ -12,7 +12,7 @@ namespace PasswordProtection.Externals
         public static string GetServerSidePass(string Username, string Password)
         {
             var Returnable = string.Empty;
-            
+
             //TODO: Serverer Fetch goes here
 
             return Returnable;
@@ -43,6 +43,11 @@ namespace PasswordProtection.Externals
             //TODO: Serverer Push goes here
 
             return Returnable;
+        }
+
+        public static void ChangePassword(string Email, string Password)
+        {
+            //TODO: Serverer Push goes here
         }
     }
 }

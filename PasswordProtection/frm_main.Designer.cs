@@ -48,7 +48,7 @@
             this.btn_Delete = new System.Windows.Forms.Button();
             this.btn_Add = new System.Windows.Forms.Button();
             this.lblPassword = new System.Windows.Forms.Label();
-            this.lblEmail = new System.Windows.Forms.Label();
+            this.lblUsername = new System.Windows.Forms.Label();
             this.cbShowPassword = new System.Windows.Forms.CheckBox();
             this.btnEdit = new System.Windows.Forms.Button();
             this.gbDangerZone = new System.Windows.Forms.GroupBox();
@@ -56,7 +56,7 @@
             this.clmnWebsite = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmnUsername = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbPassword = new System.Windows.Forms.TextBox();
-            this.tbEmail = new System.Windows.Forms.TextBox();
+            this.tbUsername = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.gbDangerZone.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgAccountList)).BeginInit();
@@ -81,8 +81,8 @@
             this.editToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.toolStripSeparator2,
-            this.logOutToolStripMenuItem,
             this.changePasswordToolStripMenuItem,
+            this.logOutToolStripMenuItem,
             this.toolStripSeparator1,
             this.quitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -92,52 +92,52 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(165, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // logOutToolStripMenuItem
             // 
             this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.logOutToolStripMenuItem.Text = "Log Out";
             this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
             // 
             // changePasswordToolStripMenuItem
             // 
             this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
-            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.changePasswordToolStripMenuItem.Text = "Change Password";
             this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(165, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -153,14 +153,14 @@
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importToolStripMenuItem.Text = "Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportToolStripMenuItem.Text = "Export";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
@@ -189,6 +189,7 @@
             this.lblLink.TabStop = true;
             this.lblLink.Text = "Link to site";
             this.lblLink.Visible = false;
+            this.lblLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblLink_LinkClicked);
             // 
             // btn_Delete
             // 
@@ -221,14 +222,14 @@
             this.lblPassword.TabIndex = 10;
             this.lblPassword.Text = "Password:";
             // 
-            // lblEmail
+            // lblUsername
             // 
-            this.lblEmail.AutoSize = true;
-            this.lblEmail.Location = new System.Drawing.Point(433, 102);
-            this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(35, 13);
-            this.lblEmail.TabIndex = 12;
-            this.lblEmail.Text = "Email:";
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Location = new System.Drawing.Point(433, 102);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(58, 13);
+            this.lblUsername.TabIndex = 12;
+            this.lblUsername.Text = "Username:";
             // 
             // cbShowPassword
             // 
@@ -288,7 +289,7 @@
             this.dgAccountList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgAccountList.Size = new System.Drawing.Size(410, 368);
             this.dgAccountList.TabIndex = 17;
-            this.dgAccountList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgAccountList_CellContentClick);
+            this.dgAccountList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgAccountList_CellClick);
             // 
             // clmnWebsite
             // 
@@ -314,26 +315,26 @@
             this.tbPassword.TabIndex = 18;
             this.tbPassword.Text = "yjjyhgiy";
             // 
-            // tbEmail
+            // tbUsername
             // 
-            this.tbEmail.Enabled = false;
-            this.tbEmail.Location = new System.Drawing.Point(433, 118);
-            this.tbEmail.Name = "tbEmail";
-            this.tbEmail.Size = new System.Drawing.Size(202, 20);
-            this.tbEmail.TabIndex = 19;
+            this.tbUsername.Enabled = false;
+            this.tbUsername.Location = new System.Drawing.Point(433, 118);
+            this.tbUsername.Name = "tbUsername";
+            this.tbUsername.Size = new System.Drawing.Size(202, 20);
+            this.tbUsername.TabIndex = 19;
             // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(647, 407);
-            this.Controls.Add(this.tbEmail);
+            this.Controls.Add(this.tbUsername);
             this.Controls.Add(this.tbPassword);
             this.Controls.Add(this.dgAccountList);
             this.Controls.Add(this.gbDangerZone);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.cbShowPassword);
-            this.Controls.Add(this.lblEmail);
+            this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.btn_Add);
             this.Controls.Add(this.lblLink);
@@ -372,7 +373,7 @@
         private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Label lblPassword;
-        private System.Windows.Forms.Label lblEmail;
+        private System.Windows.Forms.Label lblUsername;
         private System.Windows.Forms.CheckBox cbShowPassword;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.GroupBox gbDangerZone;
@@ -380,7 +381,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clmnWebsite;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmnUsername;
         private System.Windows.Forms.TextBox tbPassword;
-        private System.Windows.Forms.TextBox tbEmail;
+        private System.Windows.Forms.TextBox tbUsername;
     }
 }
 
