@@ -17,6 +17,13 @@ namespace PasswordProtection
         {
             InitializeComponent();
             this.credential = credential;
+            if (credential != null)
+            {
+                tbWebsite.Text = credential.DisplayName;
+                tbAdress.Text = credential.Link;
+                tbUsername.Text = credential.Username;
+                tbPassword.Text = credential.Password;
+            }
         }
 
         private void frm_EditCredential_Load(object sender, EventArgs e)
