@@ -32,11 +32,11 @@ namespace PasswordProtection
             {
                 try
                 {
-                    if (PassHash.Equals(tbOldPassword.Text, DbAction.GetPasswordByUser(credentials.email)))
+                    if (Crypto.CompareHash(tbOldPassword.Text, DbAction.GetPasswordByUser(credentials.email)))
                     {
                         var serverSidePass = cbBackUpPassword.Checked ? tbNewPassword2.Text : string.Empty;
                         ServerAction.ChangePassword(credentials.email, serverSidePass);
-                        DbAction.ChangePassword(credentials.email, PassHash.MakeHash(tbNewPassword2.Text));
+                        DbAction.ChangePassword(credentials.email, Crypto.MakeHash(tbNewPassword2.Text));
                         credentials.password = tbNewPassword2.Text;
                         Close();
                     }

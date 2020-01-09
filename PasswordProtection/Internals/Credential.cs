@@ -42,7 +42,7 @@
             return new string[] { DisplayName, Link, Password, Username };
         }
 
-        public string ToString()
+        public override string  ToString()
         {
             return DisplayName + ',' + Link + ',' + Username + ',' + Password;
         }

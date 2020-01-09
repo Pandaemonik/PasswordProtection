@@ -47,7 +47,7 @@ namespace PasswordProtection
                     }
                 }
 
-                if (PassHash.Equals(Password, dbPassword))
+                if (Crypto.CompareHash(Password, dbPassword))
                 {
                     Hide();
                     frm_main frm_Main = new frm_main(tbUsername.Text,mtbPassword.Text);

@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace PasswordProtection.Internals
 {
-    static class PassHash
+    static class Crypto
     {
         const int _SaltSize = 16, _HashSize = 34, _HashIter = 5000;
 
@@ -24,7 +24,7 @@ namespace PasswordProtection.Internals
             return Convert.ToBase64String(Returnable);
         }
 
-        public static bool Equals(string password, string savedPasswordHash)
+        public static bool CompareHash(string password, string savedPasswordHash)
         {
             /// <summary>
             ///INPUT:    string password - A string containing the password to hashed
@@ -51,5 +51,5 @@ namespace PasswordProtection.Internals
                     return false;
             return true;
         }
-    }
+
 }

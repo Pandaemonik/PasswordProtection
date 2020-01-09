@@ -40,6 +40,7 @@ namespace PasswordProtection
                 credential.Link = tbAdress.Text;
                 credential.Username = tbUsername.Text;
                 credential.Password = tbPassword.Text;
+                Close();
             }
             else
                 lblError.Visible = true;
