@@ -23,12 +23,8 @@ namespace PasswordProtection
 
         private void frm_main_Load(object sender, EventArgs e)
         {
-            dgAccountList.Rows.Add("test", "test");
-            dgAccountList.Rows.Add("test", "test");
-            credentials.Add(new Credential());
-            credentials.Add(new Credential());
-            //refresh dataGrid
-            
+            credentials = FileIo.readCredentialFromEncryptedFile(credentials.email, credentials.password);
+            credentials.fillInDataGrid(dgAccountList);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -58,25 +54,21 @@ namespace PasswordProtection
         private void btnEdit_Click(object sender, EventArgs e)
         {
             editCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
-            //refresh dataGrid
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             editCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
-            //refresh dataGrid
         }
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
             deleteCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
-            //refresh dataGrid
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             deleteCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
-            //refresh dataGrid
         }
 
         private void dgAccountList_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -88,7 +80,7 @@ namespace PasswordProtection
             lblLink.Links[0].LinkData = selectedCredential.Link;
             lblLink.Visible = true;
         }
-        
+
         private void lblLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             string target = e.Link.LinkData as string;
@@ -101,8 +93,9 @@ namespace PasswordProtection
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             credentials = FileIo.Import(credentials, FileIo.openFile());
-            //refresh dataGrid
             clearFields();
+            dgAccountList.Rows.Clear();
+            credentials.fillInDataGrid(dgAccountList);
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -112,7 +105,15 @@ namespace PasswordProtection
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FileIo.saveCredentialToFile(credentials.Encode());
+            switch (MessageBox.Show(this, "Would you like to save before you quit?", "Closing", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.Yes:
+                    FileIo.saveCredentialToEncryptedFile(credentials);
+                    break;
+                default:
+                    break;
+            }
+
             Hide();
             credentials = null;
             frm_LogIn frm_LogIn = new frm_LogIn();
@@ -131,6 +132,7 @@ namespace PasswordProtection
         {
             Close();
         }
+
         void addCredential()
         {
             frm_EditCredential newCredentialForm = new frm_EditCredential();
@@ -138,8 +140,6 @@ namespace PasswordProtection
             credentials.Add(newCredentialForm.credential);
             dgAccountList.Rows.Clear();
             credentials.fillInDataGrid(dgAccountList);
-
-            //refresh dataGrid
             clearFields();
         }
 
@@ -159,7 +159,6 @@ namespace PasswordProtection
         {
             credentials.removeCredentialAtIndex(i);
             dgAccountList.Rows.RemoveAt(i);
-            //refresh dataGrid
             clearFields();
         }
 
@@ -172,20 +171,21 @@ namespace PasswordProtection
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            base.OnFormClosing(e);
 
-            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+            //if (e.CloseReason == CloseReason.WindowsShutDown) return;
 
             // Confirm user wants to close
-            switch (MessageBox.Show(this, "All changes will be saved.\nAre you sure you want to quit?", "Closing", MessageBoxButtons.YesNo))
+            /*
+            switch (MessageBox.Show(this, "Would you like to save before you quit?", "Closing", MessageBoxButtons.YesNo))
             {
                 case DialogResult.No:
-                    e.Cancel = true;
                     break;
                 default:
-                    FileIo.saveCredentialToFile(credentials.Encode());
                     break;
             }
+            */
+            base.OnFormClosing(e);
+            FileIo.saveCredentialToEncryptedFile(credentials);
         }
     }
 }

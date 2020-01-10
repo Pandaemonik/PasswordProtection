@@ -35,9 +35,11 @@ namespace PasswordProtection
                     if (Crypto.CompareHash(tbOldPassword.Text, DbAction.GetPasswordByUser(credentials.email)))
                     {
                         var serverSidePass = cbBackUpPassword.Checked ? tbNewPassword2.Text : string.Empty;
-                        ServerAction.ChangePassword(credentials.email, serverSidePass);
-                        DbAction.ChangePassword(credentials.email, Crypto.MakeHash(tbNewPassword2.Text));
-                        credentials.password = tbNewPassword2.Text;
+                        var hushPuppy = Crypto.MakeHash(tbNewPassword2.Text);
+
+                        ServerAction.ChangePassword(credentials.email, serverSidePass);                        
+                        DbAction.ChangePassword(credentials.email, hushPuppy);
+                        credentials.password = hushPuppy;
                         Close();
                     }
                     else
@@ -48,7 +50,6 @@ namespace PasswordProtection
                     lblError.Text = ex.Message;
                     lblError.Visible = true;
                 }
-
             }
             else
             {

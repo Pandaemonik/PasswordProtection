@@ -32,7 +32,7 @@ namespace PasswordProtection
                 }
                 else
                 {
-                    var SrvrSidePass = ServerAction.GetServerSidePass(TbUsername, mtbPassword.Text);
+                    var SrvrSidePass = ServerAction.GetServerSidePass(TbUsername, Password);
                     if (SrvrSidePass != string.Empty)
                     {
                         try
@@ -50,7 +50,7 @@ namespace PasswordProtection
                 if (Crypto.CompareHash(Password, dbPassword))
                 {
                     Hide();
-                    frm_main frm_Main = new frm_main(tbUsername.Text,mtbPassword.Text);
+                    frm_main frm_Main = new frm_main(tbUsername.Text, dbPassword);
                     frm_Main.FormClosed += (s, args) => Close();
                     frm_Main.Show();
                 }

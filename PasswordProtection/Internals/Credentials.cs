@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace PasswordProtection.Internals
 {
@@ -12,7 +7,6 @@ namespace PasswordProtection.Internals
     {
         public string email { get; set; }
         public string password { get; set; }
-        private string _secCode;
         private List<Credential> _credentialsList;
 
         public Credentials()
@@ -37,14 +31,7 @@ namespace PasswordProtection.Internals
             email = credentials.email;
             password = credentials.password;
         }
-
-        public string Encode()
-        {
-            string Returnable = string.Empty;
-
-            return Returnable;
-        }
-
+        
         public void Add(Credential credential)
         {
             _credentialsList.Add(credential);

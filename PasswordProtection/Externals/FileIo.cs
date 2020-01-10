@@ -16,7 +16,7 @@ namespace PasswordProtection.Externals
         {
             if (WordList == null || WordList.Length == 0)
             {
-                var path = Path.Combine( Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ,"WordList.csv");
+                var path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "WordList.csv");
                 using (var reader = new System.IO.StreamReader(@path))
                 {
                     var line = reader.ReadLine();
@@ -29,7 +29,7 @@ namespace PasswordProtection.Externals
         {
             //Generates a string made form 4 random words. The dictonaty used is the "Oxford 3000" list. The number of combinations possible is 4^3262
             var Suggestion = string.Empty;
-            if(WordList == null)
+            if (WordList == null)
             {
                 initWordList();
             }
@@ -45,7 +45,6 @@ namespace PasswordProtection.Externals
 
         public static Credentials Import(Credentials credentials, string Path)
         {
-
             if (File.Exists(Path))
             {
                 using (var reader = new StreamReader(Path))
@@ -54,7 +53,6 @@ namespace PasswordProtection.Externals
                     {
                         var line = reader.ReadLine();
                         var values = line.Split(',');
-
 
                         credentials.Add(new Credential(values));
                     }
@@ -66,7 +64,7 @@ namespace PasswordProtection.Externals
         public static void Export(Credentials credentials)
         {
             // Create a file to write to.
-            using (StreamWriter sw = File.CreateText(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) , "Passwords.csv")))
+            using (StreamWriter sw = File.CreateText(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Passwords.csv")))
             {
                 string csv = string.Empty;
                 credentials.getCredentialsList().ForEach(c => sw.WriteLine(c));
@@ -90,10 +88,28 @@ namespace PasswordProtection.Externals
             return "NULL";
         }
 
-        public static void saveCredentialToFile(string EncodedCredentials)
+        public static void saveCredentialToEncryptedFile(Credentials credentials)
         {
-
+            var Filename = credentials.email.Substring(0, 1);
+            var path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), Filename + ".enc");
+            Crypto.AES_Encrypt(credentials, path);
         }
 
+        public static Credentials readCredentialFromEncryptedFile(string Username, string password)
+        {
+            var Filename = Username.Substring(0, 1);
+            var path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), Filename + ".enc");
+
+            if (File.Exists(path))
+            {
+                Credentials Returnable = Crypto.AES_Decrypt(path, password);
+                Returnable.email = Username;
+                Returnable.password = password;
+                return Returnable;
+            }
+            else
+                return new Credentials(Username, password);
+
+        }
     }
 }

@@ -21,6 +21,8 @@
             {
                 DisplayName = InitList[0];
                 Link = InitList[1];
+                Username = string.Empty;
+                Password = string.Empty;
             }
             else
             {
@@ -33,8 +35,7 @@
 
         public Credential()
         {
-            DisplayName = Username = Password = "N/A";
-            Link = "https://www.google.com/";
+            DisplayName = Username = Link = Password = string.Empty;
         }
 
         public string[] ToArray()
