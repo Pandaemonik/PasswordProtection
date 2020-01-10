@@ -172,20 +172,20 @@ namespace PasswordProtection
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
 
-            //if (e.CloseReason == CloseReason.WindowsShutDown) return;
+            base.OnFormClosing(e);
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
 
             // Confirm user wants to close
-            /*
+            
             switch (MessageBox.Show(this, "Would you like to save before you quit?", "Closing", MessageBoxButtons.YesNo))
             {
-                case DialogResult.No:
+                case DialogResult.Yes:
+                    FileIo.saveCredentialToEncryptedFile(credentials);
                     break;
                 default:
                     break;
             }
-            */
-            base.OnFormClosing(e);
-            FileIo.saveCredentialToEncryptedFile(credentials);
+            
         }
     }
 }
