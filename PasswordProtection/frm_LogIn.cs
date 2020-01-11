@@ -45,7 +45,13 @@ namespace PasswordProtection
                             MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
+                    else
+                    {
+                        lblInfo.Text = "Wrong Username/Password";
+                        lblInfo.Visible = true;
+                    }
                 }
+
 
                 if (Crypto.CompareHash(Password, dbPassword))
                 {

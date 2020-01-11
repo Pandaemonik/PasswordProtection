@@ -8,7 +8,7 @@ namespace PasswordProtection
 {
     public partial class frm_ChangePassword : Form
     {
-        public  Credentials credentials { get; }
+        public Credentials credentials { get; }
 
         public frm_ChangePassword()
         {
@@ -37,7 +37,7 @@ namespace PasswordProtection
                         var serverSidePass = cbBackUpPassword.Checked ? tbNewPassword2.Text : string.Empty;
                         var hushPuppy = Crypto.MakeHash(tbNewPassword2.Text);
 
-                        ServerAction.ChangePassword(credentials.email, serverSidePass);                        
+                        ServerAction.ChangePassword(credentials.email, tbOldPassword.Text, serverSidePass);
                         DbAction.ChangePassword(credentials.email, hushPuppy);
                         credentials.password = hushPuppy;
                         Close();

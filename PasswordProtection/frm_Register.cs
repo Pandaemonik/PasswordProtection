@@ -36,8 +36,16 @@ namespace PasswordProtection
                 try
                 {
                     var serverSidePass = cbBackUpPassword.Checked ? tbPassword.Text : string.Empty;
-                    ServerAction.RegisterNewUser(tbEmail.Text, serverSidePass);
-                    DbAction.AddNewUser(tbEmail.Text, Crypto.MakeHash(tbPassword.Text));
+                    if(ServerAction.RegisterNewUser(tbEmail.Text, serverSidePass))
+                    {
+                        DbAction.AddNewUser(tbEmail.Text, Crypto.MakeHash(tbPassword.Text));
+                        Close();
+                    }
+                    else
+                    {
+                        lblInvalidRegistration.Text = "Could not Register user. Please try again";
+                        lblInvalidRegistration.Visible = true;
+                    }
                 }
                 catch (Exception ex)
                 {
