@@ -109,7 +109,7 @@ namespace PasswordProtection.Externals
 
                 // Use Decoder class to convert from bytes to UTF8
                 // in case a character spans two buffers.
-                Decoder decoder = Encoding.UTF8.GetDecoder();
+                Decoder decoder = Encoding.Unicode.GetDecoder();
                 char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
                 decoder.GetChars(buffer, 0, bytes, chars, 0);
                 messageData.Append(chars);
