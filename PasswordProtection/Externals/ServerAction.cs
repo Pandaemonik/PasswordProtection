@@ -5,6 +5,7 @@ using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.Threading;
@@ -15,6 +16,29 @@ namespace PasswordProtection.Externals
     {
         const string serverName = "localhost";
         const int serverPort = 8080;
+
+        const string serverAnswerPattern = "\\<SERVER\\>(?<answer>.*)\\</SERVER\\>";
+        const string serverHashedPasswordAnswerPattern = "\\<HSHPWD\\>(?<passwordhash>.*)\\</HSHPWD\\>";
+        const string eofPattern = "<EOF>$";
+
+        /// <summary>
+        /// Wrapper for Regex operations.
+        /// It creates a Regex object and performs a match against the given data.
+        /// </summary>
+        /// <param name="pattern">Regex pattern to be matched</param>
+        /// <param name="data">Data/Message to be matched against the regex pattern</param>
+        /// <returns>Match object returned by Regex.Match(string)</returns>
+        static Match getMatches(string pattern, string data)
+        {
+            Regex obj = new Regex(pattern);
+            return obj.Match(data);
+        }
+
+        static bool checkOccurance(string pattern, string data)
+        {
+            Regex obj = new Regex(pattern);
+            return obj.IsMatch(data);
+        }
 
         public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
@@ -28,8 +52,24 @@ namespace PasswordProtection.Externals
         public static string GetServerSidePass(string Username, string Password)
         {
             var Returnable = string.Empty;
+            string message = "<COMMAND>01</COMMAND>" +// 01 is for Requesting server side password
+                             "<USR>" + Username + "</USR>" +
+                             "<PWD>" + Password + "</PWD>" +
+                             "<EOF>";
 
-            //TODO: Serverer Fetch goes here
+            string returnMessage = ConnectToServer(serverName, serverName, message);
+            Match statusMatch = getMatches(serverAnswerPattern, returnMessage);
+            Match hashedPasswordMatch = getMatches(serverHashedPasswordAnswerPattern, returnMessage);
+
+            if (statusMatch.Success && hashedPasswordMatch.Success && checkOccurance(eofPattern, returnMessage))
+            {
+                string result = statusMatch.Groups["answer"].Value;
+                string hashPasword = hashedPasswordMatch.Groups["passwordhash"].Value;
+                if (result.Contains("TRUE"))
+                {
+                    Returnable = hashPasword;
+                }
+            }
 
             return Returnable;
         }
@@ -38,7 +78,19 @@ namespace PasswordProtection.Externals
         {
             var Returnable = false;
             Thread.Sleep(1000);
-            //TODO: Serverer Fetch goes here
+
+            string message = "<COMMAND>02</COMMAND>" +// 02 is for checking if username is in the DB
+                            "<USR>" + Username + "</USR>" +
+                            "<EOF>";
+
+            string returnMessage = ConnectToServer(serverName, serverName, message);
+            Match statusMatch = getMatches(serverAnswerPattern, returnMessage);
+            if (statusMatch.Success)
+            {
+                string result = statusMatch.Groups["answer"].Value;
+                if (result.Contains("TRUE"))
+                    Returnable = true;
+            }
 
             return Returnable;
         }
@@ -47,22 +99,64 @@ namespace PasswordProtection.Externals
         {
             var Returnable = false;
 
-            //TODO: Serverer Push goes here
+            string message = "<COMMAND>03</COMMAND>" +// 03 is for Requesting server side password
+                             "<USR>" + Username + "</USR>" +
+                             "<PWD>" + Password + "</PWD>" +
+                             "<EOF>";
+
+            string returnMessage = ConnectToServer(serverName, serverName, message);
+            Match statusMatch = getMatches(serverAnswerPattern, returnMessage);
+            if (statusMatch.Success)
+            {
+                string result = statusMatch.Groups["answer"].Value;
+                if (result.Contains("TRUE"))
+                    Returnable = true;
+            }
+            return Returnable;
+        }
+
+        public static bool SendPasswordRequest(string Email)
+        {
+            bool Returnable = false;
+            string message = "<COMMAND>04</COMMAND>" +// 04 is for password reset request
+                             "<USR>" + Email + "</USR>" +
+                             "<EOF>";
+
+            string returnMessage = ConnectToServer(serverName, serverName, message);
+            Match statusMatch = getMatches(serverAnswerPattern, returnMessage);
+            if (statusMatch.Success)
+            {
+                string result = statusMatch.Groups["answer"].Value;
+                if (result.Contains("TRUE"))
+                    Returnable = true;
+            }
 
             return Returnable;
         }
 
-        public static void SendPasswordRequest(string Email)
+        public static bool ChangePassword(string Email, string PasswordOld, string PasswordNew)
         {
-            //TODO: Serverer Push goes here
+            bool Returnable = false;
+            string message = "<COMMAND>05</COMMAND>" +// 05 is for password change request
+                             "<USR>" + Email + "</USR>" +
+                             "<OLDPWD>" + PasswordOld + "</OLDPWD>" +
+                             "<NEWPWD>" + PasswordNew + "</NEWPWD>" +
+                             "<EOF>";
+
+            string returnMessage = ConnectToServer(serverName, serverName, message);
+            Match statusMatch = getMatches(serverAnswerPattern, returnMessage);
+
+            if (statusMatch.Success)
+            {
+                string result = statusMatch.Groups["answer"].Value;
+                if (result.Contains("TRUE"))
+                    Returnable = true;
+            }
+
+            return Returnable;
         }
 
-        public static void ChangePassword(string Email, string PasswordOld, string PasswordNew)
-        {
-            //TODO: Serverer Push goes here
-        }
-
-        public static string RunClient(string machineName, string serverName,string messsageString)
+        public static string ConnectToServer(string machineName, string serverName, string messsageString) // Establish connection to server
         {
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
