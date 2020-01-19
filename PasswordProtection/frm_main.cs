@@ -13,7 +13,6 @@ namespace PasswordProtection
         {
             InitializeComponent();
         }
-
         public frm_main(string email, string password)
         {
             credentials.email = email;
@@ -53,22 +52,26 @@ namespace PasswordProtection
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            editCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
+            if (dgAccountList.CurrentCell != null)
+                editCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
+            if (dgAccountList.CurrentCell != null)
+                editCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
         }
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
-            deleteCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
+            if (dgAccountList.CurrentCell != null)
+                deleteCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            deleteCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
+            if (dgAccountList.CurrentCell != null)
+                deleteCredentialAtIndex(dgAccountList.CurrentCell.RowIndex);
         }
 
         private void dgAccountList_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -137,29 +140,45 @@ namespace PasswordProtection
         {
             frm_EditCredential newCredentialForm = new frm_EditCredential();
             newCredentialForm.ShowDialog();
-            credentials.Add(newCredentialForm.credential);
-            dgAccountList.Rows.Clear();
-            credentials.fillInDataGrid(dgAccountList);
-            clearFields();
+            if (newCredentialForm.DialogResult != DialogResult.Cancel)
+            {
+                credentials.Add(newCredentialForm.credential);
+                dgAccountList.Rows.Clear();
+                credentials.fillInDataGrid(dgAccountList);
+                clearFields();
+            }
         }
 
         void editCredentialAtIndex(int i)
         {
             frm_EditCredential editCredentialForm = new frm_EditCredential(credentials.getCredentialAtIndex(i)); // Assumes that dgAccountList and Credentials list are identical
             editCredentialForm.ShowDialog(); // get window and its thing
-            credentials.editCredentialAtIndex(editCredentialForm.credential, i); // Set changes in the local DB
-            // Code above is probably redundant with addCredential(int i)
-            dgAccountList.Rows.Clear();
-            credentials.fillInDataGrid(dgAccountList);
+            if (editCredentialForm.DialogResult != DialogResult.Cancel)
+            {
+                credentials.editCredentialAtIndex(editCredentialForm.credential, i); // Set changes in the local DB
+                                                                                     // Code above is probably redundant with addCredential(int i)
+                dgAccountList.Rows.Clear();
+                credentials.fillInDataGrid(dgAccountList);
 
-            clearFields();
+                clearFields();
+            }
         }
 
         void deleteCredentialAtIndex(int i)
         {
-            credentials.removeCredentialAtIndex(i);
-            dgAccountList.Rows.RemoveAt(i);
-            clearFields();
+            switch (MessageBox.Show(this, "Are you sure you would like to delete this entry?", "DELETION", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.Yes:
+                    {
+                        credentials.removeCredentialAtIndex(i);
+                        dgAccountList.Rows.RemoveAt(i);
+                        clearFields();
+                        break;
+                    }
+                default:
+                    break;
+            }
+
         }
 
         void clearFields()
@@ -176,7 +195,7 @@ namespace PasswordProtection
             if (e.CloseReason == CloseReason.WindowsShutDown) return;
 
             // Confirm user wants to close
-            
+
             switch (MessageBox.Show(this, "Would you like to save before you quit?", "Closing", MessageBoxButtons.YesNo))
             {
                 case DialogResult.Yes:
@@ -185,7 +204,6 @@ namespace PasswordProtection
                 default:
                     break;
             }
-            
         }
     }
 }

@@ -34,7 +34,7 @@ namespace PasswordProtection.Externals
                         result = -1;
                     }
                     sqlDataAdapter.InsertCommand.Dispose();
-                    return (result < 0);
+                    return (result > 0);
                 }
             }
         }

@@ -49,7 +49,10 @@ namespace PasswordProtection.Internals
 
         public void removeCredentialAtIndex(int i)
         {
-            _credentialsList.RemoveAt(i);
+            if (_credentialsList.Count >= i )
+            {
+                _credentialsList.RemoveAt(i);
+            }
         }
 
         public List<string> getCredentialsList()

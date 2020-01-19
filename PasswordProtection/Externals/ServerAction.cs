@@ -17,7 +17,7 @@ namespace PasswordProtection.Externals
         const string serverName = "localhost";
         const int serverPort = 8080;
 
-        const string serverAnswerPattern = "\\<SERVER\\>(?<answer>.*)\\</SERVER\\>";
+        const string serverAnswerPattern = @"<SERVER>(?<answer>.*)</SERVER>";
         const string serverHashedPasswordAnswerPattern = "\\<HSHPWD\\>(?<passwordhash>.*)\\</HSHPWD\\>";
         const string eofPattern = "<EOF>$";
 
@@ -52,7 +52,7 @@ namespace PasswordProtection.Externals
         public static string GetServerSidePass(string Username, string Password)
         {
             var Returnable = string.Empty;
-            string message = "<COMMAND>01</COMMAND>" +// 01 is for Requesting server side password
+            string message = @"<COMMAND>01</COMMAND>" +// 01 is for Requesting server side password
                              "<USR>" + Username + "</USR>" +
                              "<PWD>" + Password + "</PWD>" +
                              "<EOF>";
@@ -79,7 +79,7 @@ namespace PasswordProtection.Externals
             var Returnable = false;
             Thread.Sleep(1000);
 
-            string message = "<COMMAND>02</COMMAND>" +// 02 is for checking if username is in the DB
+            string message = @"<COMMAND>02</COMMAND>" +// 02 is for checking if username is in the DB
                             "<USR>" + Username + "</USR>" +
                             "<EOF>";
 
@@ -91,7 +91,6 @@ namespace PasswordProtection.Externals
                 if (result.Contains("TRUE"))
                     Returnable = true;
             }
-
             return Returnable;
         }
 
@@ -99,7 +98,7 @@ namespace PasswordProtection.Externals
         {
             var Returnable = false;
 
-            string message = "<COMMAND>03</COMMAND>" +// 03 is for Requesting server side password
+            string message = @"<COMMAND>03</COMMAND>" +// 03 is for Requesting server side password
                              "<USR>" + Username + "</USR>" +
                              "<PWD>" + Password + "</PWD>" +
                              "<EOF>";
@@ -118,7 +117,7 @@ namespace PasswordProtection.Externals
         public static bool SendPasswordRequest(string Email)
         {
             bool Returnable = false;
-            string message = "<COMMAND>04</COMMAND>" +// 04 is for password reset request
+            string message = @"<COMMAND>04</COMMAND>" +// 04 is for password reset request
                              "<USR>" + Email + "</USR>" +
                              "<EOF>";
 
@@ -137,7 +136,7 @@ namespace PasswordProtection.Externals
         public static bool ChangePassword(string Email, string PasswordOld, string PasswordNew)
         {
             bool Returnable = false;
-            string message = "<COMMAND>05</COMMAND>" +// 05 is for password change request
+            string message = @"<COMMAND>05</COMMAND>" +// 05 is for password change request
                              "<USR>" + Email + "</USR>" +
                              "<OLDPWD>" + PasswordOld + "</OLDPWD>" +
                              "<NEWPWD>" + PasswordNew + "</NEWPWD>" +
@@ -173,7 +172,7 @@ namespace PasswordProtection.Externals
             {
                 sslStream.AuthenticateAsClient(serverName);
             }
-            catch (AuthenticationException e)
+            catch (Exception e)
             {
                 Console.WriteLine("Authentication failed - closing the connection.");
                 client.Close();

@@ -104,7 +104,6 @@
             // 
             // btnSave
             // 
-            this.btnSave.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Location = new System.Drawing.Point(109, 135);
             this.btnSave.Name = "btnSave";
@@ -116,7 +115,6 @@
             // 
             // btnSuggest
             // 
-            this.btnSuggest.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnSuggest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSuggest.Location = new System.Drawing.Point(349, 83);
             this.btnSuggest.Name = "btnSuggest";
@@ -186,11 +184,8 @@
             this.Controls.Add(this.cbShowPassword);
             this.Controls.Add(this.btnCancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.HelpButton = true;
             this.Name = "frm_ChangePassword";
-            this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Change Password";
             this.ResumeLayout(false);
             this.PerformLayout();

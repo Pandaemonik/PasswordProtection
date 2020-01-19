@@ -26,7 +26,7 @@ namespace PasswordProtection
 
         private void btnSuggest_Click(object sender, EventArgs e)
         {
-            tbPassword.Text =FileIo.generateSuggestion();
+            tbPassword.Text = FileIo.generateSuggestion();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -36,10 +36,19 @@ namespace PasswordProtection
                 try
                 {
                     var serverSidePass = cbBackUpPassword.Checked ? tbPassword.Text : string.Empty;
-                    if(ServerAction.RegisterNewUser(tbEmail.Text, serverSidePass))
+                    if (ServerAction.RegisterNewUser(tbEmail.Text, serverSidePass))
                     {
-                        DbAction.AddNewUser(tbEmail.Text, Crypto.MakeHash(tbPassword.Text));
-                        Close();
+
+                        try
+                        {
+                            if (!DbAction.AddNewUser(tbEmail.Text, Crypto.MakeHash(tbPassword.Text)))
+                                throw new DatabaseConnectionFailure("Error inserting data into Database!");
+                            Close();
+                        }
+                        catch (DatabaseConnectionFailure error)
+                        {
+                            MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {

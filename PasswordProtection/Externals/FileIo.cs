@@ -8,19 +8,19 @@ using PasswordProtection.Internals;
 
 namespace PasswordProtection.Externals
 {
-    class FileIo
+    static class FileIo
     {
-        private static string[] WordList;
+        private static string[] _WordList;
 
         public static void initWordList()
         {
-            if (WordList == null || WordList.Length == 0)
+            if (_WordList == null || _WordList.Length == 0)
             {
                 var path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "WordList.csv");
                 using (var reader = new System.IO.StreamReader(@path))
                 {
                     var line = reader.ReadLine();
-                    WordList = line.Split(';');
+                    _WordList = line.Split(';');
                 }
             }
         }
@@ -29,7 +29,7 @@ namespace PasswordProtection.Externals
         {
             //Generates a string made form 4 random words. The dictonaty used is the "Oxford 3000" list. The number of combinations possible is 4^3262
             var Suggestion = string.Empty;
-            if (WordList == null)
+            if (_WordList == null)
             {
                 initWordList();
             }
@@ -37,7 +37,7 @@ namespace PasswordProtection.Externals
             {
                 Random random = new Random();
                 for (int i = 0; i < 4; i++)
-                    Suggestion += WordList[random.Next(0, WordList.Length - 1)] + " ";
+                    Suggestion += _WordList[random.Next(0, _WordList.Length - 1)] + " ";
             } while (!Credential.IsPasswordVaild(Suggestion));
 
             return Suggestion.Trim();
@@ -90,14 +90,14 @@ namespace PasswordProtection.Externals
 
         public static void saveCredentialToEncryptedFile(Credentials credentials)
         {
-            var Filename = credentials.email.Substring(0, 1);
+            var Filename = getFilenameFromEmail(credentials.email);
             var path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), Filename + ".enc");
             Crypto.AES_Encrypt(credentials, path);
         }
 
         public static Credentials readCredentialFromEncryptedFile(string Username, string password)
         {
-            var Filename = Username.Substring(0, 1);
+            var Filename = getFilenameFromEmail(Username);
             var path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), Filename + ".enc");
 
             if (File.Exists(path))
@@ -110,6 +110,11 @@ namespace PasswordProtection.Externals
             else
                 return new Credentials(Username, password);
 
+        }
+
+        static string getFilenameFromEmail(string username)
+        {
+            return username.Substring(0, username.LastIndexOf('@')); ;
         }
     }
 }

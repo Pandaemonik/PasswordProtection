@@ -11,7 +11,7 @@ namespace PasswordProtection.Internals
 {
     static class Crypto
     {
-        const int _SaltSize = 16, _AES_KeySize = 256, _AES_BlockSize = 128, _HashSize = 34, _HashIter = 5000;
+        const int _SaltSize = 256, _AES_KeySize = 256, _AES_BlockSize = 128, _HashSize = 256, _HashIter = 5000;
 
         public static string MakeHash(string password)
         {
@@ -39,23 +39,26 @@ namespace PasswordProtection.Internals
             ///DESCRIPTION: Hashes the input password with the input hash and checks it to the input hash
             /// </summary>
             byte[] salt, passHash, dbHash, HashArray;
-
-            try
+            if(savedPasswordHash != "" || savedPasswordHash != string.Empty)
             {
-                HashArray = Convert.FromBase64String(savedPasswordHash);
-                Array.Copy(HashArray, 0, salt = new byte[_SaltSize], 0, _SaltSize);
-                Array.Copy(HashArray, _SaltSize, dbHash = new byte[_HashSize], 0, _HashSize);
+                try
+                {
+                    HashArray = Convert.FromBase64String(savedPasswordHash);
+                    Array.Copy(HashArray, 0, salt = new byte[_SaltSize], 0, _SaltSize);
+                    Array.Copy(HashArray, _SaltSize, dbHash = new byte[_HashSize], 0, _HashSize);
 
-                passHash = new Rfc2898DeriveBytes(password, salt, _HashIter).GetBytes(_HashSize);
+                    passHash = new Rfc2898DeriveBytes(password, salt, _HashIter).GetBytes(_HashSize);
+                }
+                catch (FormatException)
+                {
+                    throw new UnauthorizedAccessException("Wrong Username/Password");
+                }
+                for (int i = 0; i < _HashSize; i++)
+                    if (passHash[i] != dbHash[i])
+                        return false;
+                return true;
             }
-            catch (FormatException)
-            {
-                throw new UnauthorizedAccessException("Wrong Username/Password");
-            }
-            for (int i = 0; i < _HashSize; i++)
-                if (passHash[i] != dbHash[i])
-                    return false;
-            return true;
+            return false;
         }
 
         public static void AES_Encrypt(Credentials credentials, string cryptFile)
@@ -71,7 +74,7 @@ namespace PasswordProtection.Internals
             AES.IV = key.GetBytes(AES.BlockSize / 8);
             AES.Padding = PaddingMode.ISO10126;
 
-            AES.Mode = CipherMode.CBC;
+            AES.Mode = CipherMode.CFB;
 
             using (CryptoStream cs = new CryptoStream(new FileStream(cryptFile, FileMode.Create),
                   AES.CreateEncryptor(),
@@ -106,7 +109,7 @@ namespace PasswordProtection.Internals
                 AES.IV = key.GetBytes(AES.BlockSize / 8);
                 AES.Padding = PaddingMode.ISO10126;
 
-                AES.Mode = CipherMode.CBC;
+                AES.Mode = CipherMode.CFB;
 
                 using (CryptoStream cs = new CryptoStream(fsCrypt,
                      AES.CreateDecryptor(),
