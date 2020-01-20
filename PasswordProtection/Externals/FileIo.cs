@@ -64,7 +64,11 @@ namespace PasswordProtection.Externals
         public static void Export(Credentials credentials)
         {
             // Create a file to write to.
-            using (StreamWriter sw = File.CreateText(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Passwords.csv")))
+            using (StreamWriter sw = File.CreateText(Path.Combine(
+                Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location),
+                "Passwords_-_",
+                getFilenameFromEmail(credentials.email),
+                ".csv")))
             {
                 string csv = string.Empty;
                 credentials.getCredentialsList().ForEach(c => sw.WriteLine(c));

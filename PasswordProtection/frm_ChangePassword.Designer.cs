@@ -187,6 +187,7 @@
             this.Name = "frm_ChangePassword";
             this.ShowInTaskbar = false;
             this.Text = "Change Password";
+            this.Load += new System.EventHandler(this.frm_ChangePassword_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -18,7 +18,8 @@ namespace PasswordProtection
         public frm_ChangePassword(Credentials credentials)
         {
             InitializeComponent();
-            this.credentials = new Credentials(credentials);
+            this.credentials = new Credentials();
+            this.credentials = credentials;
         }
 
         private void btnSuggest_Click(object sender, EventArgs e)
@@ -34,10 +35,12 @@ namespace PasswordProtection
                 {
                     if (Crypto.CompareHash(tbOldPassword.Text, DbAction.GetPasswordByUser(credentials.email)))
                     {
-                        var serverSidePass = cbBackUpPassword.Checked ? tbNewPassword2.Text : string.Empty;
+                        if (ServerAction.PingServer())
+                        {
+                            if (cbBackUpPassword.Checked)
+                                ServerAction.ChangePassword(credentials.email, tbOldPassword.Text, tbNewPassword2.Text);
+                        }
                         var hushPuppy = Crypto.MakeHash(tbNewPassword2.Text);
-
-                        ServerAction.ChangePassword(credentials.email, tbOldPassword.Text, serverSidePass);
                         DbAction.ChangePassword(credentials.email, hushPuppy);
                         credentials.password = hushPuppy;
                         Close();
@@ -98,6 +101,11 @@ namespace PasswordProtection
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void frm_ChangePassword_Load(object sender, EventArgs e)
+        {
+            cbBackUpPassword.Enabled = ServerAction.PingServer();
         }
     }
 }

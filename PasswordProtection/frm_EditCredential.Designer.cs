@@ -86,6 +86,7 @@
             // 
             // btnSave
             // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Location = new System.Drawing.Point(15, 204);
             this.btnSave.Name = "btnSave";

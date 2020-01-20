@@ -77,7 +77,6 @@ namespace PasswordProtection.Externals
         public static bool IsUsernameInServer(string Username)
         {
             var Returnable = false;
-            Thread.Sleep(1000);
 
             string message = @"<COMMAND>02</COMMAND>" +// 02 is for checking if username is in the DB
                             "<USR>" + Username + "</USR>" +
@@ -117,19 +116,20 @@ namespace PasswordProtection.Externals
         public static bool SendPasswordRequest(string Email)
         {
             bool Returnable = false;
+
             string message = @"<COMMAND>04</COMMAND>" +// 04 is for password reset request
                              "<USR>" + Email + "</USR>" +
                              "<EOF>";
 
             string returnMessage = ConnectToServer(serverName, serverName, message);
             Match statusMatch = getMatches(serverAnswerPattern, returnMessage);
+
             if (statusMatch.Success)
             {
                 string result = statusMatch.Groups["answer"].Value;
                 if (result.Contains("TRUE"))
                     Returnable = true;
             }
-
             return Returnable;
         }
 
@@ -155,37 +155,59 @@ namespace PasswordProtection.Externals
             return Returnable;
         }
 
-        public static string ConnectToServer(string machineName, string serverName, string messsageString) // Establish connection to server
+        public static bool PingServer()
         {
-            // Create a TCP/IP client socket.
-            // machineName is the host running the server application.
-            TcpClient client = new TcpClient(machineName, 8080);
+            return string.Equals(ConnectToServer(serverName, serverName, "ping"), "Pinged");
+        }
 
-            SslStream sslStream = new SslStream(
-                client.GetStream(),
-                false,
-                new RemoteCertificateValidationCallback(ValidateServerCertificate),
-                null
-                );
-
+        public static string ConnectToServer(string machineName, string serverName, string messsageString)
+        {
+            string serverMessage = string.Empty;
             try
             {
-                sslStream.AuthenticateAsClient(serverName);
+                // Create a TCP/IP client socket.
+                // machineName is the host running the server application.
+                using (TcpClient client = new TcpClient(machineName, 8080))
+                {
+                    if (messsageString != "ping")
+                        serverMessage = SendData(client, messsageString);
+                    else
+                        serverMessage = "Pinged";
+                    client.Close();
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Authentication failed - closing the connection.");
-                client.Close();
-                return string.Empty;
+                serverMessage = "ERR:Connect- " + e.Message;
             }
-
-            byte[] messsage = Encoding.Unicode.GetBytes(messsageString);
-            sslStream.Write(messsage);
-            sslStream.Flush();
-            string serverMessage = ReadMessage(sslStream);
-            client.Close();
-
             return serverMessage;
+        }
+
+        static string SendData(TcpClient client, string messsageString)
+        {
+            using (
+            SslStream sslStream = new SslStream(
+                   client.GetStream(),
+                   false,
+                   new RemoteCertificateValidationCallback(ValidateServerCertificate),
+                   null
+                   ))
+            {
+                try
+                {
+                    sslStream.AuthenticateAsClient(serverName);
+                }
+                catch (Exception e)
+                {
+                    client.Close();
+                    return "ERR:Authent- " + e.Message;
+                }
+
+                byte[] messsage = Encoding.Unicode.GetBytes(messsageString);
+                sslStream.Write(messsage);
+                sslStream.Flush();
+                return ReadMessage(sslStream);
+            }
         }
 
         static string ReadMessage(SslStream sslStream)

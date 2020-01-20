@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using PasswordProtection.Internals;
 using PasswordProtection.Externals;
+using System.Threading;
 
 namespace PasswordProtection
 {
@@ -17,6 +18,7 @@ namespace PasswordProtection
         {
             FileIo.initWordList();
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
+            btnResetPass.Enabled = btnRegister.Enabled = ServerAction.PingServer();
         }
         private void btnLogIn_Click(object sender, EventArgs e)
         {
@@ -34,7 +36,7 @@ namespace PasswordProtection
                     }
                     else
                     {
-                        var SrvrSidePass = ServerAction.GetServerSidePass(TbUsername, Password);
+                        var SrvrSidePass = ServerAction.PingServer() ? ServerAction.GetServerSidePass(TbUsername, Password) : string.Empty;
                         if (SrvrSidePass != string.Empty)
                         {
                             try
@@ -57,11 +59,10 @@ namespace PasswordProtection
                         }
                     }
 
-
                     if (Crypto.CompareHash(Password, dbPassword))
                     {
                         Hide();
-                        frm_main frm_Main = new frm_main(tbUsername.Text, Password);
+                        frm_main frm_Main = new frm_main(tbUsername.Text, mtbPassword.Text);
                         frm_Main.FormClosed += (s, args) => Close();
                         frm_Main.Show();
                     }
@@ -73,6 +74,7 @@ namespace PasswordProtection
                     MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            Thread.Sleep(1000);
         }
 
         private void btnRegister_Click(object sender, EventArgs e)

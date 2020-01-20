@@ -31,7 +31,7 @@ namespace PasswordProtection.Internals
             email = credentials.email;
             password = credentials.password;
         }
-        
+
         public void Add(Credential credential)
         {
             _credentialsList.Add(credential);
@@ -49,7 +49,7 @@ namespace PasswordProtection.Internals
 
         public void removeCredentialAtIndex(int i)
         {
-            if (_credentialsList.Count >= i )
+            if (_credentialsList.Count >= i)
             {
                 _credentialsList.RemoveAt(i);
             }

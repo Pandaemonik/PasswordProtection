@@ -111,15 +111,17 @@ namespace PasswordProtection
             switch (MessageBox.Show(this, "Would you like to save before you quit?", "Closing", MessageBoxButtons.YesNo))
             {
                 case DialogResult.Yes:
-                    FileIo.saveCredentialToEncryptedFile(credentials);
-                    break;
+                    {
+                        FileIo.saveCredentialToEncryptedFile(credentials);
+                        break;
+                    }
                 default:
                     break;
             }
 
             Hide();
-            credentials = null;
             frm_LogIn frm_LogIn = new frm_LogIn();
+            credentials = null;
             frm_LogIn.FormClosed += (s, args) => Close();
             frm_LogIn.Show();
         }
@@ -140,7 +142,7 @@ namespace PasswordProtection
         {
             frm_EditCredential newCredentialForm = new frm_EditCredential();
             newCredentialForm.ShowDialog();
-            if (newCredentialForm.DialogResult != DialogResult.Cancel)
+            if (newCredentialForm.DialogResult == DialogResult.Cancel)
             {
                 credentials.Add(newCredentialForm.credential);
                 dgAccountList.Rows.Clear();
